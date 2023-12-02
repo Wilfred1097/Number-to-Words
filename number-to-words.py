@@ -1,3 +1,36 @@
+from tkinter import *
+from datetime import datetime
+from tkinter import messagebox
+
+root = Tk()
+root.title("Number to Words")
+root.geometry('1200x700+10+100')
+root.resizable(False, False)
+
+
+
+def show():
+    now = datetime.now()
+    dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
+    try:
+        value = int(num.get())
+        if value > -1:
+            words = convert_to_words(value)
+            t1.insert(END, f"{dt_string}\t\t\t{value}\t\t{words.capitalize()}\n")
+        else:
+            messagebox.showerror("showerror", "Invalid Input!\nPlease enter a positive number.")
+            clear()
+    except ValueError:
+        messagebox.showerror("showerror", "Invalid Input!\nPlease enter a valid number.")
+        clear()
+
+
+def clear():
+    e1.delete(0, END)
+    # t1.delete(1.0, END)
+
+num = StringVar()
+
 def convert_to_words(number):
     # Define lists for the words
     ones = ["", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
@@ -41,13 +74,16 @@ def convert_to_words(number):
 
     return result.strip()
 
-# Get user input
-try:
-    number = int(input("Enter a number: "))
-    if number < 0 or number == str:
-        print("Please enter a non-negative number.")
-    else:
-        words = convert_to_words(number)
-        print(f"{number} in words: {words.capitalize()}")
-except ValueError:
-    print("Please enter a valid number.")
+Label(root,text="Enter a Number:", font=('helvetica 12 bold')).place(x=10,y=10)
+Label(root,text="Datetime:", font=('helvetica 10 bold')).place(x=5,y=85)
+Label(root,text="Number:", font=('helvetica 10 bold')).place(x=220,y=85)
+Label(root,text="Words:", font=('helvetica 10 bold')).place(x=365,y=85)
+e1 = Entry(root, textvariable=num, font=('helvetica 12 bold'), width=26, bg='white')
+e1.place(x=150,y=10)
+e1.focus()
+Button(root, text='Submit', font=('helvetica 10 bold'), width=10, command=show).place(x=150,y=50)
+Button(root, text='Clear', font=('helvetica 10 bold'), width=10, command=clear).place(x=260,y=50)
+t1 = Text(root, width=132, height=30,font=('sans-serif 12 bold'))
+t1.place(x=5,y=110)
+
+root.mainloop()
