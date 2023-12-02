@@ -8,7 +8,6 @@ root.geometry('1200x700+10+100')
 root.resizable(False, False)
 
 
-
 def show():
     now = datetime.now()
     dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
